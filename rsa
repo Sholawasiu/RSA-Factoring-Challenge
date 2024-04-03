@@ -1,0 +1,33 @@
+#!/bin/bash/python3
+
+import sys
+from math import sqrt, isqrt
+
+def prime_factors(n):
+    factors = []
+    # Handle 2 separately to make the loop simpler
+    while n % 2 == 0:
+        factors.append(2)
+        n //= 2
+    # Check odd numbers up to the square root of n
+    for i in range(3, isqrt(n) + 1, 2):
+        while n % i == 0:
+            factors.append(i)
+            n //= i
+    # If n is a prime number greater than 2
+    if n > 2:
+        factors.append(n)
+    return factors
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: script.py <number>")
+        sys.exit(1)
+
+    n = int(sys.argv[1])
+    factors = prime_factors(n)
+    if len(factors) == 2 and all(factors[0] != factors[1] for f in factors):  # Ensure two unique prime factors
+        print(f"{n} = {factors[0]} * {factors[1]}")
+    else:
+        print("The number does not have exactly two unique prime factors.")
+
